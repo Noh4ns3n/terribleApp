@@ -5,13 +5,18 @@ interface User {
     username: string;
     password:string;
 }
+interface DataType {
+    user: User
+}
 
 const User = () => {
     const {
         data, 
         error,
         isPending
-    } = useFetch(`http://localhost:3000/user/2`);
+    } = useFetch<DataType>(`http://localhost:3000/user/1`);
+
+    const currentUser = {...data?.user};
 
     return(
         isPending ? (
@@ -20,8 +25,8 @@ const User = () => {
             </div>
             ) : (
             <>
-            {data.user && <div className="userData">User: {data.user.username}</div>}
-            {data.user && <div className="userData">Password: {data.user.password}</div>}
+            {currentUser && <div className="userData">User: {currentUser.username}</div>}
+            {currentUser && <div className="userData">Password: {currentUser.password}</div>}
             {error && <div className="error">Error : {error}</div>}
             </>
             )
