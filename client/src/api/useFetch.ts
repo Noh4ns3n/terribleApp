@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-
-interface ApiResponse<T> {
-  data: T | null;
+interface ApiResponse<DataType> {
+  data: DataType | null;
   error: string | null;
   isPending: boolean;
 }
 
-const useFetch = <T>(url : string): ApiResponse<T> => {
+const useFetch = <DataType>(url : string): ApiResponse<DataType> => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
