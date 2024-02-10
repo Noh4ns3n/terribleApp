@@ -1,18 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import User from './api/User'
 
-function App() {
+const App = () => {
   const [count, setCount] = useState(0)
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/user/1')
-    .then(response => response.json())
-    .then(data => setData(data));
-
-  }, [])
 
   return (
     <>
@@ -33,7 +26,9 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <div>Here is my data {data}</div>
+      <div className="user">
+        <User/>
+      </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>

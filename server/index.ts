@@ -20,12 +20,13 @@ app.get("/user/:id", async (req : Request, res : Response) => {
             });
         });
         if(user) {
-            const userJSON = JSON.stringify(user, null, 2);
-            res.json(`User information : ${userJSON}`);
+            res.status(200).json({user});
+        } else {
+            res.status(404).json({error : "User not found"});
         }}
     catch(error) {
         console.error(error);
-        res.status(500).send("Internal Service Error");
+        res.status(500).json({error : "Internal Service Error"});
     }
 });
 
