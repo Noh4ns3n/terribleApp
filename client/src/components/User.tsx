@@ -1,17 +1,9 @@
 import useFetch from "../api/useFetch";
-
-interface User {
-  id: number;
-  username: string;
-  password: string;
-}
-interface DataType {
-  user: User;
-}
+import type {UserT} from "../types/DataTypes";
 
 const User = () => {
-  const { data, error, isPending } = useFetch<DataType>(
-    `http://localhost:3000/user/3`
+  const { data, error, isPending } = useFetch<{user:UserT}>(
+    `http://localhost:3000/user/1`
   );
 
   const currentUser = { ...data?.user };

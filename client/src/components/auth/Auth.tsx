@@ -1,9 +1,9 @@
 import { useState } from "react";
 import TextInput from "../commons/TextInput";
-import User from "../../model/User";
+import {UserT} from "../../types/DataTypes";
 
 const Auth = () => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserT>();
 
   const handleChange = (event : any) => {
     

@@ -1,5 +1,6 @@
 import express from "express";
 import userRoutes from "./src/routes/user.route";
+import projectsRoutes from "./src/routes/projects.route";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -15,6 +16,7 @@ app.use((_, res, next) => {
 });
 
 app.use(userRoutes);
+app.use(projectsRoutes);
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`);

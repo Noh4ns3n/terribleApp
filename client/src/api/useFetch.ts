@@ -11,7 +11,9 @@ const useFetch = <DataType>(url : string): ApiResponse<DataType> => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-      fetch(url)
+      fetch(url, {
+        method:'GET'
+      })
         .then((resp) => {
           if (!resp.ok) {
             throw Error("Could not fetch data for that resource");

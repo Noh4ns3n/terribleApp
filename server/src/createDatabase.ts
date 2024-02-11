@@ -8,6 +8,10 @@ db.serialize(() => {
     );
 
     db.run(
+        "CREATE TABLE projects (id INTEGER PRIMARY KEY, name TEXT, description TEXT, type TEXT, url TEXT, language TEXT)"
+    );
+
+    db.run(
         "INSERT INTO users (username, password) VALUES ('user', 'password')"
     );
 
