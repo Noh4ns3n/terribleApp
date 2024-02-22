@@ -2,7 +2,7 @@ import "./App.css";
 import User from "./components/User";
 import Navbar from "./components/commons/Navbar";
 import Home from "./components/home/Home";
-import ParticleSystem1 from "./components/other_applications/ParticleSystem1";
+import ParticleSystem from "./components/other_applications/ParticleSystem";
 import ProjectsList from "./components/projects/ProjectsList";
 import NotFound from "./components/commons/NotFound";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -17,8 +17,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<ProjectsList />} />
             <Route path="/users" element={<User />} />
-            <Route path="/particleSystem1" element={<ParticleSystem1 folderPath="particleSystem1"/>} />
-            <Route path="/particleSystem2" element={<ParticleSystem1 folderPath="particleSystem2"/>} />
+            <Route path="/particleSystem1" element={<ParticleSystem folderPath="particleSystem1"/>} />
+            <Route path="/particleSystem2" element={<ParticleSystem folderPath="particleSystem2"/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

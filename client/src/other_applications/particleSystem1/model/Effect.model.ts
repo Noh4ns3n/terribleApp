@@ -33,26 +33,37 @@ export class Effect {
         radius: 150,
       };
   
-      window.addEventListener("resize", (e) => {
-        const w = e.target as Window;
-        this.resize(w.innerWidth, w.innerHeight);
-      });
-      window.addEventListener("mousemove", (e) => {
-        if (this.mouse.pressed) {
-          this.mouse.x = e.x;
-          this.mouse.y = e.y;
-        }
-      });
-      window.addEventListener("mousedown", (e) => {
-        this.mouse.pressed = true;
-        this.mouse.x = e.x;
-        this.mouse.y = e.y;
-      });
-      window.addEventListener("mouseup", () => {
-        this.mouse.pressed = false;
-      });
+      window.addEventListener("resize", this.handleResize);
+      window.addEventListener("mousemove", this.handleMouseMove);
+      window.addEventListener("mousedown", this.handleMouseDown);
+      window.addEventListener("mouseup", this.handleMouseUp);
     }
   
+    handleResize = (e: Event) => {
+      const w = e.target as Window;
+      this.resize(w.innerWidth, w.innerHeight);
+    };
+  
+    handleMouseMove = (e: MouseEvent) => {
+      // if (this.mouse.pressed) {
+      //   this.mouse.x = e.x;
+      //   this.mouse.y = e.y;
+      // }
+
+      const rect = this.canvas.getBoundingClientRect();
+      this.mouse.x = e.x - rect.left;
+      
+      this.mouse.y = e.y - rect.top;
+    };
+  
+    handleMouseDown = () => {
+      this.mouse.pressed = true;
+    };
+  
+    handleMouseUp = () => {
+      this.mouse.pressed = false;
+    };
+
     setupContext() {
       this.context.lineWidth = 2;
       const gradient = this.context.createLinearGradient(
@@ -69,13 +80,13 @@ export class Effect {
       console.log(" this.context :>> ", this.context);
     }
   
-    createParticles() {
+    createParticles = () => {
       for (let i: number = 0; i < this.numberOfParticles; i++) {
         this.particles.push(new Particle(this));
       }
     }
   
-    handleParticles() {
+    handleParticles = () => {
       this.connectParticles();
       this.particles.forEach((particle) => {
         particle.draw();
@@ -83,7 +94,7 @@ export class Effect {
       });
     }
   
-    connectParticles() {
+    connectParticles = () => {
       const maxDistance: number = 100;
       // allows comparison of every particle, with every other particle
       for (let a: number = 0; a < this.particles.length; a++) {
@@ -107,7 +118,7 @@ export class Effect {
       }
     }
   
-    resize(width: number, height: number) {
+    resize = (width: number, height: number) => {
       this.canvas.width = width;
       this.canvas.height = height;
       this.width = width;
@@ -118,5 +129,16 @@ export class Effect {
         if(particle.x < particle.radius || particle.x > this.canvas.width - particle.radius || particle.y < particle.radius || particle.y > this.canvas.height - particle.radius)
         particle.reset();
       });
+    }
+
+    cleanup = () => {
+    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("mousemove", this.handleMouseMove);
+    window.removeEventListener("mousedown", this.handleMouseDown);
+    window.removeEventListener("mouseup", this.handleMouseUp);
+    this.particles = [];
+    this.canvas = null!;
+    this.context = null!;
+    this.mouse = null!;
     }
   }
