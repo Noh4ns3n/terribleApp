@@ -7,7 +7,7 @@ type Mouse = {
   radius: number;
 };
 
-export class Effect {
+export default class Effect {
   canvas: HTMLCanvasElement;
   element: DOMRect;
   context: CanvasRenderingContext2D;
@@ -61,28 +61,32 @@ export class Effect {
         console.log("this.particles :>> ", this.particles);
       }
     });
-    window.addEventListener("resize", (e) => {
-      const w = e.target as Window;
-      this.resize(w.innerWidth, w.innerHeight);
-      this.element = document
-        .getElementById("caption")
-        ?.getBoundingClientRect() as DOMRect;
-    });
-    window.addEventListener("mousemove", (e) => {
-      if (this.mouse.pressed) {
-        this.mouse.x = e.x;
-        this.mouse.y = e.y;
-      }
-    });
-    window.addEventListener("mousedown", (e) => {
-      this.mouse.pressed = true;
-      this.mouse.x = e.x;
-      this.mouse.y = e.y;
-    });
-    window.addEventListener("mouseup", () => {
-      this.mouse.pressed = false;
-    });
+    window.addEventListener("resize", this.handleResize);
+    window.addEventListener("mousemove", this.handleMouseMove);
+    window.addEventListener("mousedown", this.handleMouseDown);
+    window.addEventListener("mouseup", this.handleMouseUp);
   }
+  handleResize = () => {
+    const rect = this.canvas.getBoundingClientRect();
+    this.resize(rect.width, rect.height);
+    this.element = document
+      .getElementById("caption")
+      ?.getBoundingClientRect() as DOMRect;
+  };
+
+  handleMouseMove = (e: MouseEvent) => {
+    const rect = this.canvas.getBoundingClientRect();
+    this.mouse.x = e.x - rect.left;
+    this.mouse.y = e.y - rect.top;
+  };
+
+  handleMouseDown = () => {
+    this.mouse.pressed = true;
+  };
+
+  handleMouseUp = () => {
+    this.mouse.pressed = false;
+  };
 
   setupContext() {
     this.context.lineWidth = 2;
@@ -154,4 +158,15 @@ export class Effect {
         particle.reset();
     });
   }
+
+  cleanup = () => {
+    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("mousemove", this.handleMouseMove);
+    window.removeEventListener("mousedown", this.handleMouseDown);
+    window.removeEventListener("mouseup", this.handleMouseUp);
+    this.particles = [];
+    this.canvas = null!;
+    this.context = null!;
+    this.mouse = null!;
+  };
 }
