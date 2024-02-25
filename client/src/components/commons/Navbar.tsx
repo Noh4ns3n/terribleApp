@@ -10,6 +10,7 @@ const Navbar = () => {
                 <Link to="/users">Users</Link>
                 <Link to="/particleSystem1">Particle System 1</Link>
                 <Link to="/particleSystem2">Particle System 2</Link>
+                <Link to="/goblin3000">Goblin 3000</Link>
             </div>
         </nav>
      );

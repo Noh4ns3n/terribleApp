@@ -26,6 +26,7 @@ export default class Effect {
     this.element = document
       .getElementById("caption")
       ?.getBoundingClientRect() as DOMRect;
+      console.log('this.element :>> ', this.element);
     this.width = this.canvas.width;
     this.height = this.canvas.height;
     this.particles = [];
@@ -109,11 +110,13 @@ export default class Effect {
 
     //DEBUG
     if (this.debug) {
+    const rect = this.canvas.getBoundingClientRect();
+
       this.context.strokeRect(
-        this.element.x,
-        this.element.y,
-        this.element.width,
-        this.element.height
+        this.element.x+rect.x,
+        this.element.y-rect.y,
+        this.element.width-3*rect.x,
+        this.element.height,
       );
     }
   }

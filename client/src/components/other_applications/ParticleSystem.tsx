@@ -1,10 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Effect from "../../other_applications/particleSystem1/model/Effect.model";
 import Effect2 from "../../other_applications/particleSystem2/model/Effect.model";
 
-interface ParticleSystemProps {
-  folderPath: string;
-}
 interface ParticleSystemProps {
   folderPath: string;
 }
@@ -12,8 +9,6 @@ interface ParticleSystemProps {
 const ParticleSystem = ({ folderPath }: ParticleSystemProps) => {
   const animationIdRef = useRef<number>();
   let effect: Effect;
-  // folderPath === "particleSystem1" ?
-  //   effect = new Effect2(canvas);
 
   useEffect(() => {
     const canvas = document.getElementById("canvas1") as HTMLCanvasElement;
@@ -51,28 +46,44 @@ const ParticleSystem = ({ folderPath }: ParticleSystemProps) => {
 
   return (
     <>
-      <canvas id="canvas1" />
-      {folderPath === "particleSystem1" ? (
-        <h2 id="caption" style={{ display: "none" }}>
-          Zog Zog
-        </h2>
-      ) : (
-        <h2 id="caption" style={{ position: 'relative', top: '-200px' }}>Zog Zog</h2>
-      )}
-      <button
-        style={{ width: "100px", height: "100px" }}
-        value={0.9}
-        onClick={(e) => changeParticleNumber(parseFloat(e.target.value))}
-      >
-        -
-      </button>
-      <button
-        style={{ width: "100px", height: "100px" }}
-        value={1.1}
-        onClick={(e) => changeParticleNumber(parseFloat(e.target.value))}
-      >
-        +
-      </button>
+      <div className="partycleSystem">
+        <div className="canvasContainer">
+          <canvas id="canvas1" />
+          {folderPath === "particleSystem1" ? (
+            <h2 id="caption" style={{ display: "none" }}>
+              Zog Zog
+            </h2>
+          ) : (
+            <h2 id="caption" style={{ position: "relative", top: "-200px" }}>
+              Zog Zog
+            </h2>
+          )}
+        </div>
+        <div className="buttonsContainer">
+          <button
+            style={{ width: "100px", height: "100px" }}
+            value={0.9}
+            onClick={(e) =>
+              changeParticleNumber(
+                parseFloat((e.target as HTMLButtonElement).value)
+              )
+            }
+          >
+            -
+          </button>
+          <button
+            style={{ width: "100px", height: "100px" }}
+            value={1.1}
+            onClick={(e) =>
+              changeParticleNumber(
+                parseFloat((e.target as HTMLButtonElement).value)
+              )
+            }
+          >
+            +
+          </button>
+        </div>
+      </div>
     </>
   );
 };
