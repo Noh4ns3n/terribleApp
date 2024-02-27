@@ -1,4 +1,4 @@
-body {
+.body-goblin3000 {
     background: black;
     color: white;
     margin: 0;
@@ -9,22 +9,22 @@ body {
     height: 100vh;
 }
 
-#container {
+#container-goblin3000 {
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#containerHUD {
+#containerHUD-goblin3000 {
     margin-top: 10px;
 }
 
-#canvas1 {
+#canvas1-goblin3000 {
     border: 5px solid white;
 }
 
-#canvas2 {
+#canvas2-goblin3000 {
     margin-top: 20px;
     /* background:rgba(255,255,255,0.1) */
 }

@@ -27,8 +27,6 @@ router.get("/user/:id", async (req: Request, res: Response) => {
 
 // LOGIN USER
 router.post("/login", async (req, res) => {
-    console.log("req :>> ", req);
-    console.log("req.body :>> ", req.body);
     const { username, password } = req.body;
     const isValid = await verifyPassword(username, password);
 
@@ -44,12 +42,10 @@ router.post("/login", async (req, res) => {
 
 // REGISTER USER
 router.post("/register", async (req, res) => {
-    console.log("req :>> ", req);
     if (!req.body) {
         return res.status(400).json({ error: "no body provided" });
     }
     const { username, password } = req.body;
-    console.log("username, password :>> ", username, password);
     const existingUser = await new Promise<boolean>((resolve, reject) => {
         db.get("SELECT * FROM users WHERE username = ?", [username], (err, row) => {
             if (err) return reject(err);

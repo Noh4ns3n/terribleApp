@@ -26,7 +26,6 @@ export default class Effect {
     this.element = document
       .getElementById("caption")
       ?.getBoundingClientRect() as DOMRect;
-      console.log('this.element :>> ', this.element);
     this.width = this.canvas.width;
     this.height = this.canvas.height;
     this.particles = [];

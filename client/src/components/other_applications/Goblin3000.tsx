@@ -1,46 +1,53 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Game } from "../../other_applications/goblin3000/model/Game.ts";
 
-interface Goblin3000Props {
-    active: boolean;
-  }
+const Goblin3000 = () => {
+  const refCanvas1 = useRef<HTMLCanvasElement>(null);
+  const refCanvas2 = useRef<HTMLCanvasElement>(null);
+  const [active, setActive] = useState(false);
 
-const Goblin3000 = ({ active }: Goblin3000Props) => {
   useEffect(() => {
+    if (!active) return;
     // 1 = Game, 2 = HUD
-    const canvas = document.getElementById("canvas1") as HTMLCanvasElement;
+    const canvas = refCanvas1.current as HTMLCanvasElement;
     const rect = canvas.getBoundingClientRect();
-    const canvas2 = document.getElementById("canvas2") as HTMLCanvasElement;
+    const canvas2 = refCanvas2.current as HTMLCanvasElement;
     const rect2 = canvas2.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-    canvas2.width = rect2.width;
-    canvas2.height = rect2.height;
     const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
     const ctx2 = canvas2.getContext("2d") as CanvasRenderingContext2D;
-    let game : Game;
+    const game = new Game({
+      context: ctx,
+      context2: ctx2,
+      rect1: rect,
+      rect2,
+      active,
+    });
 
-    if(!active) {
-        game = new Game(ctx, ctx2);
-        game.animatePreparation(0);
+    if (active) {
+      game.animatePreparation(0);
     }
 
     return () => {
       console.log("Component is unmounting");
-      if(game) game.cleanup();
+      if (game.gameStarted) game.cleanup();
     };
   }, [active]);
 
   return (
     <>
-      <div id="container">
-        <canvas id="canvas1" />
-        <div id="containerHUD">
-          <canvas id="canvas2" />
+      <div className="body-goblin3000">
+        <div id="container-goblin3000 test">
+          <canvas width={768} height={432} id="canvas1-goblin3000" ref={refCanvas1} />
+          <canvas width={768} height={108} id="canvas2-goblin3000" ref={refCanvas2} />
         </div>
+        <button
+          style={{ position: "relative", zIndex: "100" }}
+          id="button-goblin3000"
+          onClick={() => {
+            setActive(!active);
+          }}
+        />
       </div>
-      <button onClick={() => {active = !active
-    console.log("active :>> ", active);}} />
     </>
   );
 };

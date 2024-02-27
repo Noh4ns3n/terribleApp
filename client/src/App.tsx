@@ -1,4 +1,3 @@
-import "./App.css";
 import User from "./components/User";
 import Navbar from "./components/commons/Navbar";
 import Home from "./components/home/Home";
@@ -20,7 +19,7 @@ const App = () => {
             <Route path="/users" element={<User />} />
             <Route path="/particleSystem1" element={<ParticleSystem folderPath="particleSystem1"/>} />
             <Route path="/particleSystem2" element={<ParticleSystem folderPath="particleSystem2"/>} />
-            <Route path="/goblin3000" element={<Goblin3000 active={false}/>} />
+            <Route path="/goblin3000" element={<Goblin3000/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

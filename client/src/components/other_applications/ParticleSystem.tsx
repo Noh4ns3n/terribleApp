@@ -15,8 +15,6 @@ const ParticleSystem = ({ folderPath }: ParticleSystemProps) => {
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
-    console.log("canvas :>> ", canvas);
-    console.log("rect :>> ", rect);
     folderPath === "particleSystem1"
       ? (effect = new Effect(canvas))
       : (effect = new Effect2(canvas));
@@ -37,7 +35,6 @@ const ParticleSystem = ({ folderPath }: ParticleSystemProps) => {
   }, [folderPath]);
 
   const changeParticleNumber = (amount: number) => {
-    console.log("amount :>> ", amount);
     effect.numberOfParticles *= amount;
     effect.particles = [];
     effect.setupContext();

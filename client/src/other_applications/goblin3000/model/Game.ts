@@ -4,7 +4,13 @@ import { Enemy } from "./Enemy";
 import { InputHandler } from "./InputHandler";
 import { Player } from "./Player";
 // import "../scripts/require.js";
-
+interface GameProps {
+  context: CanvasRenderingContext2D;
+  context2: CanvasRenderingContext2D;
+  rect1: DOMRect;
+  rect2: DOMRect;
+  active: boolean;
+}
 export class Game {
   input: InputHandler;
   background: Background;
@@ -36,15 +42,18 @@ export class Game {
   playerLastHealth: number;
   lastScore: number;
   animationFrame!: number;
+  rect1: DOMRect;
+  rect2: DOMRect;
+  active: boolean;
 
-  constructor(
-    context: CanvasRenderingContext2D,
-    context2: CanvasRenderingContext2D
-  ) {
+  constructor({ context, context2, rect1, rect2, active }: GameProps) {
+    this.active = active;
     this.context = context;
     this.context2 = context2;
-    this.height = this.context.canvas.height;
-    this.width = this.context.canvas.width;
+    this.rect1 = rect1;
+    this.rect2 = rect2;
+    this.height = this.rect1.height;
+    this.width = this.rect1.width;
     this.lastTime = 0;
     this.deltaTime = 0;
     this.enemyIntervalReduction = 0;
@@ -379,7 +388,6 @@ export class Game {
   animatePreparation = (timeStamp: number) => {
     this.deltaTime = timeStamp - this.lastTime;
     this.lastTime = timeStamp;
-    console.log("animate");
     if (!this.musicStarted && this.player.traveledX !== 0) {
       this.playMusic();
       this.musicStarted = true;
@@ -387,7 +395,7 @@ export class Game {
 
     this.context.clearRect(0, 0, this.width, this.height);
     this.background.draw(this.context);
-    this.background.update();
+    // this.background.update();
     this.player.draw(this.context);
     this.player.update(this.input, this.deltaTime);
 
@@ -407,6 +415,7 @@ export class Game {
     this.lastFrame += this.deltaTime;
 
     if (this.debug) {
+      console.log("this.rect1 :>> ", this.rect1);
       console.log("this.player :>> ", this.player);
       console.log("this.randomEnemyInterval :>> ", this.randomEnemyInterval);
       console.log("this.enemyInterval :>> ", this.enemyInterval);

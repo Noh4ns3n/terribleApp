@@ -10,14 +10,14 @@ export   class Layer {
   x2: number;
   y: number;
   speed: number;
-  constructor(background, image, speedModifier) {
+  constructor(background: Background, image: HTMLImageElement, speedModifier: number) {
     this.background = background;
     this.width = this.background.width;
     this.height = this.background.height;
     this.image = image;
     this.speedModifier = speedModifier;
     this.x = 0;
-    this.x2 = 0;
+    this.x2 = this.background.width;
     this.y = 0;
     this.speed = this.background.speedX * this.speedModifier;
   }
